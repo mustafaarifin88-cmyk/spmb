@@ -38,11 +38,11 @@
                         <input type="text" name="nama_sekolah" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nama_sekolah : '' ?>" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Desa / Kelurahan (Untuk Footer Form)</label>
+                        <label class="form-label fw-bold">Desa / Kelurahan</label>
                         <input type="text" name="desa" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->desa : '' ?>" required>
                     </div>
                     <div class="col-12 mb-4">
-                        <label class="form-label fw-bold">Alamat Lengkap (Untuk Kop Surat)</label>
+                        <label class="form-label fw-bold">Alamat Lengkap (Kop Surat)</label>
                         <textarea name="alamat_lengkap" class="form-control" rows="3" required><?= $sekolah ? $sekolah->alamat_lengkap : '' ?></textarea>
                     </div>
 
@@ -55,7 +55,35 @@
                         <input type="text" name="nip_kepsek" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nip_kepsek : '' ?>" required>
                     </div>
 
-                    <div class="col-12 mt-3">
+                    <div class="col-md-6 mt-3">
+                        <label class="form-label fw-bold">Logo Pemda (Kiri Kop Surat - PNG)</label>
+                        <div class="d-flex align-items-center gap-3 mt-2 p-2 border rounded bg-light">
+                            <?php if ($sekolah && $sekolah->logo_pemda) : ?>
+                                <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda" id="previewPemda" style="height: 80px; width: 80px; object-fit: contain;">
+                            <?php else : ?>
+                                <div id="previewPemda" class="d-flex align-items-center justify-content-center text-muted text-center" style="height: 80px; width: 80px; border: 2px dashed #ccc; font-size: 10px;">Belum Ada Logo</div>
+                            <?php endif; ?>
+                            <div class="flex-grow-1">
+                                <input type="file" name="logo_pemda" id="logo_pemda" class="form-control form-control-sm" accept="image/png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        <label class="form-label fw-bold">Logo Sekolah (Kanan Kop Surat - PNG)</label>
+                        <div class="d-flex align-items-center gap-3 mt-2 p-2 border rounded bg-light">
+                            <?php if ($sekolah && $sekolah->logo_sekolah) : ?>
+                                <img src="<?= base_url('uploads/logo/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah" id="previewSekolah" style="height: 80px; width: 80px; object-fit: contain;">
+                            <?php else : ?>
+                                <div id="previewSekolah" class="d-flex align-items-center justify-content-center text-muted text-center" style="height: 80px; width: 80px; border: 2px dashed #ccc; font-size: 10px;">Belum Ada Logo</div>
+                            <?php endif; ?>
+                            <div class="flex-grow-1">
+                                <input type="file" name="logo_sekolah" id="logo_sekolah" class="form-control form-control-sm" accept="image/png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
                         <label class="form-label fw-bold">Tanda Tangan Kepala Sekolah (PNG Transparan)</label>
                         <div class="d-flex align-items-center gap-4 mt-2 p-3 border rounded bg-light">
                             <?php if ($sekolah && $sekolah->ttd_kepsek) : ?>
@@ -65,7 +93,6 @@
                             <?php endif; ?>
                             <div class="flex-grow-1">
                                 <input type="file" name="ttd_kepsek" id="ttd_kepsek" class="form-control" accept="image/png">
-                                <small class="text-muted d-block mt-2">Format wajib PNG tanpa latar belakang agar menyatu dengan dokumen PDF.</small>
                             </div>
                         </div>
                     </div>
@@ -82,25 +109,36 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    document.getElementById('ttd_kepsek').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                let previewContainer = document.getElementById('previewTTD');
-                if (previewContainer.tagName === 'DIV') {
-                    const img = document.createElement('img');
-                    img.id = 'previewTTD';
-                    img.style.maxHeight = '100px';
-                    img.style.maxWidth = '200px';
-                    img.style.objectFit = 'contain';
-                    previewContainer.replaceWith(img);
-                    previewContainer = img;
+    function previewImage(inputId, previewId) {
+        document.getElementById(inputId).addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let previewContainer = document.getElementById(previewId);
+                    if (previewContainer.tagName === 'DIV') {
+                        const img = document.createElement('img');
+                        img.id = previewId;
+                        if(previewId === 'previewTTD') {
+                            img.style.maxHeight = '100px';
+                            img.style.maxWidth = '200px';
+                        } else {
+                            img.style.height = '80px';
+                            img.style.width = '80px';
+                        }
+                        img.style.objectFit = 'contain';
+                        previewContainer.replaceWith(img);
+                        previewContainer = img;
+                    }
+                    previewContainer.src = e.target.result;
                 }
-                previewContainer.src = e.target.result;
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
-        }
-    });
+        });
+    }
+
+    previewImage('ttd_kepsek', 'previewTTD');
+    previewImage('logo_pemda', 'previewPemda');
+    previewImage('logo_sekolah', 'previewSekolah');
 </script>
 <?= $this->endSection() ?>
