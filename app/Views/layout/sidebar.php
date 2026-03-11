@@ -1,19 +1,96 @@
+<style>
+    /* Styling khusus untuk Sidebar Dark Glassmorphism */
+    .layout-menu {
+        background: rgba(15, 23, 42, 0.85) !important; /* Warna gelap Slate/Navy */
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    /* Warna Teks Default Menu */
+    .layout-menu .menu-link {
+        color: #cbd5e1 !important; /* Abu-abu terang agar mudah dibaca */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 0.5rem;
+        margin: 0.2rem 0.8rem;
+    }
+    
+    /* Warna Ikon Default */
+    .layout-menu .menu-icon {
+        color: #94a3b8 !important;
+        transition: all 0.3s ease;
+    }
+
+    /* Efek Hover (Saat Disorot) */
+    .layout-menu .menu-item:not(.active) > .menu-link:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+        transform: translateX(6px); /* Efek bergeser sedikit ke kanan */
+    }
+    
+    .layout-menu .menu-item:not(.active) > .menu-link:hover .menu-icon {
+        color: #ffffff !important;
+        transform: scale(1.1); /* Ikon sedikit membesar */
+    }
+
+    /* Efek Menu Aktif */
+    .layout-menu .menu-item.active > .menu-link {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important; /* Gradiasi ungu-biru keren */
+        color: #ffffff !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+        border-radius: 0.5rem;
+    }
+    
+    .layout-menu .menu-item.active > .menu-link .menu-icon {
+        color: #ffffff !important;
+    }
+
+    /* Teks Header Menu (Master Data, dll) */
+    .layout-menu .menu-header-text {
+        color: #64748b !important;
+        letter-spacing: 1px;
+    }
+
+    /* Brand Logo & Teks */
+    .layout-menu .app-brand-text {
+        color: #ffffff !important;
+        text-shadow: 0 2px 10px rgba(255,255,255,0.2);
+    }
+    
+    /* Profil Sidebar */
+    .sidebar-profile-box {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 0 1rem;
+        padding: 1rem 0;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .layout-menu .user-profile h6 {
+        color: #ffffff !important;
+        letter-spacing: 0.5px;
+    }
+</style>
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo mt-2 mb-2">
+    <div class="app-brand demo mt-3 mb-2">
         <a href="<?= base_url() ?>" class="app-brand-link">
-            <i class='bx bxs-school fs-2 text-primary'></i>
+            <i class='bx bxs-school fs-2' style="color: #a855f7;"></i>
             <span class="app-brand-text demo menu-text fw-bolder ms-2 text-uppercase">SPMB</span>
         </a>
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            <i class="bx bx-chevron-left bx-sm align-middle text-white"></i>
         </a>
     </div>
     <div class="menu-inner-shadow"></div>
     
-    <div class="user-profile text-center mt-3 mb-4">
-        <img src="<?= base_url('uploads/profil/' . session()->get('foto_profil')) ?>" alt="Foto Profil" class="rounded-circle mb-2 shadow-sm" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #696cff; padding: 2px;">
-        <h6 class="mb-0 fw-bold text-dark"><?= session()->get('nama_lengkap') ?></h6>
-        <small class="badge bg-label-primary text-uppercase mt-1"><?= session()->get('level') ?></small>
+    <div class="user-profile text-center mt-3 mb-4 sidebar-profile-box">
+        <div class="position-relative d-inline-block">
+            <img src="<?= base_url('uploads/profil/' . session()->get('foto_profil')) ?>" alt="Foto Profil" class="rounded-circle mb-2 shadow-lg" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #6366f1; padding: 2px;">
+            <span class="position-absolute bottom-0 end-0 p-2 bg-success border border-light rounded-circle" style="transform: translate(-10px, -15px);"></span>
+        </div>
+        <h6 class="mb-0 fw-bold"><?= session()->get('nama_lengkap') ?></h6>
+        <small class="badge bg-label-info text-uppercase mt-2 shadow-sm" style="font-size: 0.7rem;"><i class='bx bx-check-shield me-1'></i><?= session()->get('level') ?></small>
     </div>
 
     <ul class="menu-inner py-1">
