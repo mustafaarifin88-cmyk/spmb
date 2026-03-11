@@ -20,14 +20,36 @@ class ProfilSekolah extends BaseController
         $id = $this->request->getPost('id');
         $sekolah = $profilModel->find($id);
 
-        $file = $this->request->getFile('ttd_kepsek');
-        $namaTtd = $sekolah->ttd_kepsek;
+        $fileTtd = $this->request->getFile('ttd_kepsek');
+        $namaTtd = $sekolah ? $sekolah->ttd_kepsek : null;
 
-        if ($file && $file->isValid() && !$file->hasMoved()) {
-            $namaTtd = $file->getRandomName();
-            $file->move('uploads/ttd/', $namaTtd);
-            if ($sekolah->ttd_kepsek && file_exists('uploads/ttd/' . $sekolah->ttd_kepsek)) {
+        if ($fileTtd && $fileTtd->isValid() && !$fileTtd->hasMoved()) {
+            $namaTtd = $fileTtd->getRandomName();
+            $fileTtd->move('uploads/ttd/', $namaTtd);
+            if ($sekolah && $sekolah->ttd_kepsek && file_exists('uploads/ttd/' . $sekolah->ttd_kepsek)) {
                 unlink('uploads/ttd/' . $sekolah->ttd_kepsek);
+            }
+        }
+
+        $filePemda = $this->request->getFile('logo_pemda');
+        $namaPemda = $sekolah ? $sekolah->logo_pemda : null;
+
+        if ($filePemda && $filePemda->isValid() && !$filePemda->hasMoved()) {
+            $namaPemda = $filePemda->getRandomName();
+            $filePemda->move('uploads/logo/', $namaPemda);
+            if ($sekolah && $sekolah->logo_pemda && file_exists('uploads/logo/' . $sekolah->logo_pemda)) {
+                unlink('uploads/logo/' . $sekolah->logo_pemda);
+            }
+        }
+
+        $fileSekolah = $this->request->getFile('logo_sekolah');
+        $namaSekolah = $sekolah ? $sekolah->logo_sekolah : null;
+
+        if ($fileSekolah && $fileSekolah->isValid() && !$fileSekolah->hasMoved()) {
+            $namaSekolah = $fileSekolah->getRandomName();
+            $fileSekolah->move('uploads/logo/', $namaSekolah);
+            if ($sekolah && $sekolah->logo_sekolah && file_exists('uploads/logo/' . $sekolah->logo_sekolah)) {
+                unlink('uploads/logo/' . $sekolah->logo_sekolah);
             }
         }
 
@@ -37,7 +59,9 @@ class ProfilSekolah extends BaseController
             'desa' => $this->request->getPost('desa'),
             'nama_kepsek' => $this->request->getPost('nama_kepsek'),
             'nip_kepsek' => $this->request->getPost('nip_kepsek'),
-            'ttd_kepsek' => $namaTtd
+            'ttd_kepsek' => $namaTtd,
+            'logo_pemda' => $namaPemda,
+            'logo_sekolah' => $namaSekolah
         ];
 
         if ($id) {
