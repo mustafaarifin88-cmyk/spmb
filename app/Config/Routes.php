@@ -8,6 +8,8 @@ $routes->group('auth', function ($routes) {
     $routes->get('/', 'Auth::index');
     $routes->post('login', 'Auth::login');
     $routes->get('logout', 'Auth::logout');
+    $routes->get('register', 'Auth::register');
+    $routes->post('store_register', 'Auth::store_register');
 });
 
 $routes->group('admin', ['filter' => 'role:admin'], function ($routes) {
