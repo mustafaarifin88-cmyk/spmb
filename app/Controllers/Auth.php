@@ -46,4 +46,34 @@ class Auth extends BaseController
         session()->destroy();
         return redirect()->to('/');
     }
+
+    public function register()
+    {
+        if (session()->get('logged_in')) {
+            return redirect()->to(session()->get('level') == 'admin' ? '/admin/dashboard' : '/siswa/dashboard');
+        }
+        return view('auth/register');
+    }
+
+    public function store_register()
+    {
+        $userModel = new UserModel();
+        
+        $username = $this->request->getPost('username');
+        $cek_username = $userModel->where('username', $username)->first();
+
+        if ($cek_username) {
+            return redirect()->back()->with('error', 'Username sudah digunakan, silakan pilih username lain.');
+        }
+
+        $userModel->insert([
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+            'username'     => $username,
+            'password'     => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'foto_profil'  => 'default.png',
+            'level'        => 'siswa'
+        ]);
+
+        return redirect()->to('/auth')->with('success', 'Akun berhasil dibuat. Silakan login.');
+    }
 }
