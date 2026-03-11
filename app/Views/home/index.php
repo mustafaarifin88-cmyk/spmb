@@ -28,21 +28,11 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Public Sans', sans-serif;
-            background: linear-gradient(-45deg, #696cff, #e0c3fc, #8ca6fb, #ffb199);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -57,13 +47,13 @@
             position: relative;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 3rem;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             color: #fff;
             transform: translateY(50px);
             opacity: 0;
@@ -91,9 +81,9 @@
             color: #f8f9fa;
         }
         .btn-glass {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
             padding: 12px 30px;
             border-radius: 50px;
@@ -104,10 +94,10 @@
             margin: 0 10px;
         }
         .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.6);
+            background: #ffffff;
             color: #696cff;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .floating-element {
             position: fixed;
@@ -123,19 +113,19 @@
             100% { transform: translateY(0px) rotate(360deg); }
         }
         .step-card {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 2rem;
             height: 100%;
             color: #fff;
             transition: transform 0.3s ease, background 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .step-card:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.6);
         }
         .step-icon {
             font-size: 3rem;
