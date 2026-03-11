@@ -10,6 +10,6 @@ class ProfilSekolahModel extends Model
     protected $primaryKey       = 'id';
     protected $returnType       = 'object';
     protected $allowedFields    = [
-        'nama_sekolah', 'alamat_lengkap', 'desa', 'nama_kepsek', 'nip_kepsek', 'ttd_kepsek'
+        'nama_sekolah', 'alamat_lengkap', 'desa', 'nama_kepsek', 'nip_kepsek', 'ttd_kepsek', 'logo_pemda', 'logo_sekolah'
     ];
 }
