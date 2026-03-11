@@ -28,6 +28,16 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Public Sans', sans-serif;
+            background: linear-gradient(-45deg, #696cff, #e0c3fc, #8ca6fb, #ffb199);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
         .glass-nav {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -39,7 +49,7 @@
             transition: all 0.3s ease;
         }
         .hero-section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -100,16 +110,37 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .floating-element {
-            position: absolute;
+            position: fixed;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             border-radius: 50%;
             animation: float 6s infinite ease-in-out;
+            z-index: 0;
         }
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
             100% { transform: translateY(0px) rotate(360deg); }
+        }
+        .step-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
+            color: #fff;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .step-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
         }
     </style>
 </head>
@@ -128,6 +159,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-white fw-medium" href="<?= base_url() ?>">Beranda</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-medium" href="#tata-cara">Tata Cara</a>
+                    </li>
                     <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                         <a class="btn btn-light text-primary rounded-pill px-4 fw-bold shadow-sm" href="<?= base_url('auth') ?>">Login</a>
                     </li>
@@ -141,12 +175,56 @@
     <div class="floating-element" style="width: 80px; height: 80px; bottom: 10%; left: 20%; animation-delay: 4s;"></div>
 
     <section class="hero-section">
-        <div class="glass-card">
+        <div class="glass-card" style="z-index: 1;">
             <h1 class="hero-title">Penerimaan Murid Baru</h1>
             <p class="hero-subtitle">Masa Depan Cerah Dimulai Dari Sini. Bergabunglah bersama kami dan raih prestasi gemilang dengan fasilitas pendidikan terbaik.</p>
             <div>
                 <a href="<?= base_url('auth') ?>" class="btn-glass"><i class='bx bx-log-in-circle me-2'></i>Masuk</a>
                 <a href="<?= base_url('auth/register') ?>" class="btn-glass"><i class='bx bx-user-plus me-2'></i>Daftar Sekarang</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Tata Cara Pendaftaran -->
+    <section id="tata-cara" class="py-5" style="position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center;">
+        <div class="container py-5">
+            <h2 class="text-center text-white fw-bold mb-5" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Tata Cara Pendaftaran</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-2">
+                    <div class="step-card text-center">
+                        <i class='bx bx-user-plus step-icon'></i>
+                        <h5 class="fw-bold text-white">1. Buat Akun</h5>
+                        <p class="small mb-0 text-white" style="opacity: 0.8;">Daftar akun baru menggunakan nama lengkap dan username.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                    <div class="step-card text-center">
+                        <i class='bx bx-log-in step-icon'></i>
+                        <h5 class="fw-bold text-white">2. Login</h5>
+                        <p class="small mb-0 text-white" style="opacity: 0.8;">Masuk ke sistem menggunakan akun yang telah dibuat.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                    <div class="step-card text-center">
+                        <i class='bx bx-edit step-icon'></i>
+                        <h5 class="fw-bold text-white">3. Isi Formulir</h5>
+                        <p class="small mb-0 text-white" style="opacity: 0.8;">Lengkapi data diri dan asal sekolah dengan benar.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                    <div class="step-card text-center">
+                        <i class='bx bx-time-five step-icon'></i>
+                        <h5 class="fw-bold text-white">4. Tunggu</h5>
+                        <p class="small mb-0 text-white" style="opacity: 0.8;">Tunggu konfirmasi pendaftaran dari pihak admin sekolah.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                    <div class="step-card text-center">
+                        <i class='bx bx-printer step-icon'></i>
+                        <h5 class="fw-bold text-white">5. Cetak</h5>
+                        <p class="small mb-0 text-white" style="opacity: 0.8;">Cetak bukti formulir pendaftaran jika sudah diterima.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
