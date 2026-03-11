@@ -8,6 +8,8 @@ use App\Models\AgamaModel;
 use App\Models\PekerjaanModel;
 use App\Models\ProfilSekolahModel;
 use App\Models\LatarBelakangModel;
+use App\Models\PersyaratanModel;
+use App\Models\BerkasPendaftaranModel;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -18,6 +20,7 @@ class Pendaftaran extends BaseController
         $pendaftaranModel = new PendaftaranModel();
         $agamaModel = new AgamaModel();
         $pekerjaanModel = new PekerjaanModel();
+        $persyaratanModel = new PersyaratanModel();
 
         $id_user = session()->get('id');
         $cekDaftar = $pendaftaranModel->where('id_user', $id_user)->first();
@@ -28,6 +31,7 @@ class Pendaftaran extends BaseController
 
         $data['agama'] = $agamaModel->findAll();
         $data['pekerjaan'] = $pekerjaanModel->findAll();
+        $data['persyaratan'] = $persyaratanModel->findAll();
 
         return view('siswa/pendaftaran/form_input', $data);
     }
@@ -35,6 +39,7 @@ class Pendaftaran extends BaseController
     public function store()
     {
         $pendaftaranModel = new PendaftaranModel();
+        $berkasModel = new BerkasPendaftaranModel();
 
         $ttdData = $this->request->getPost('ttd_ortu_base64');
         $ttdName = '';
@@ -89,6 +94,24 @@ class Pendaftaran extends BaseController
         ];
 
         $pendaftaranModel->insert($dataInsert);
+        $idPendaftaran = $pendaftaranModel->getInsertID();
+
+        if ($this->request->getFiles()) {
+            $files = $this->request->getFiles();
+            if (isset($files['berkas'])) {
+                foreach ($files['berkas'] as $idPersyaratan => $file) {
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        $newName = $file->getRandomName();
+                        $file->move('uploads/siswa/', $newName);
+                        $berkasModel->insert([
+                            'id_pendaftaran' => $idPendaftaran,
+                            'id_persyaratan' => $idPersyaratan,
+                            'file_path'      => $newName
+                        ]);
+                    }
+                }
+            }
+        }
 
         return redirect()->to('/siswa/dashboard')->with('success', 'Formulir pendaftaran berhasil dikirim!');
     }
