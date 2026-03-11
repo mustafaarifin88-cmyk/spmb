@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\PendaftaranModel;
 use App\Models\ProfilSekolahModel;
 use App\Models\LatarBelakangModel;
+use App\Models\BerkasPendaftaranModel;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -26,7 +27,14 @@ class Konfirmasi extends BaseController
 
     public function detail($id)
     {
+        $berkasModel = new BerkasPendaftaranModel();
+        
         $data['pendaftaran'] = $this->pendaftaranModel->find($id);
+        $data['berkas'] = $berkasModel->select('berkas_pendaftaran.*, persyaratan.nama_persyaratan')
+                                      ->join('persyaratan', 'persyaratan.id = berkas_pendaftaran.id_persyaratan')
+                                      ->where('id_pendaftaran', $id)
+                                      ->findAll();
+                                      
         return view('admin/konfirmasi/detail', $data);
     }
 
