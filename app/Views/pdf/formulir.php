@@ -29,17 +29,44 @@
             z-index: 1;
         }
         .kop-surat {
-            text-align: center;
+            width: 100%;
             border-bottom: 3px solid #000;
             padding-bottom: 10px;
             margin-bottom: 20px;
+            display: table;
         }
-        .kop-surat h2 {
+        .logo-kiri {
+            display: table-cell;
+            width: 15%;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .logo-kiri img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+        .logo-kanan {
+            display: table-cell;
+            width: 15%;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .logo-kanan img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+        .teks-kop {
+            display: table-cell;
+            width: 70%;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .teks-kop h2 {
             margin: 0 0 5px 0;
             font-size: 20px;
             text-transform: uppercase;
         }
-        .kop-surat p {
+        .teks-kop p {
             margin: 0;
             font-size: 12px;
         }
@@ -112,8 +139,20 @@
 
     <div class="content">
         <div class="kop-surat">
-            <h2><?= $sekolah ? strtoupper($sekolah->nama_sekolah) : 'NAMA SEKOLAH' ?></h2>
-            <p><?= $sekolah ? $sekolah->alamat_lengkap : 'Alamat Lengkap Sekolah' ?></p>
+            <div class="logo-kiri">
+                <?php if ($sekolah && $sekolah->logo_pemda && file_exists('uploads/logo/' . $sekolah->logo_pemda)) : ?>
+                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda">
+                <?php endif; ?>
+            </div>
+            <div class="teks-kop">
+                <h2><?= $sekolah ? strtoupper($sekolah->nama_sekolah) : 'NAMA SEKOLAH' ?></h2>
+                <p><?= $sekolah ? $sekolah->alamat_lengkap : 'Alamat Lengkap Sekolah' ?></p>
+            </div>
+            <div class="logo-kanan">
+                <?php if ($sekolah && $sekolah->logo_sekolah && file_exists('uploads/logo/' . $sekolah->logo_sekolah)) : ?>
+                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah">
+                <?php endif; ?>
+            </div>
         </div>
 
         <div class="title">FORMULIR PENDAFTARAN PESERTA DIDIK BARU</div>
