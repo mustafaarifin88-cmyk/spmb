@@ -21,7 +21,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.2; /* Menjaga teks tetap terbaca */
+            opacity: 0.2;
         }
         .content {
             padding: 40px 50px;
@@ -71,9 +71,22 @@
         table.tabel-data td:nth-child(3) { width: 2%; }
         table.tabel-data td:nth-child(4) { width: 58%; }
         
+        table.tabel-petugas {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+        table.tabel-petugas td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        table.tabel-petugas td:nth-child(1) { width: 30%; font-weight: bold; }
+        table.tabel-petugas td:nth-child(2) { width: 70%; }
+        
         .ttd-container {
             width: 100%;
-            margin-top: 40px;
+            margin-top: 20px;
             page-break-inside: avoid;
         }
         .ttd-box {
@@ -149,6 +162,18 @@
             <tr><td>30.</td><td>Asal Peserta Didik</td><td>:</td><td><?= $pendaftaran->asal_peserta_didik ?></td></tr>
             <tr><td>31.</td><td>Nama Taman Kanak-Kanak</td><td>:</td><td><?= $pendaftaran->nama_tk ?></td></tr>
             <tr><td>32.</td><td>Tahun & Nomor Ijazah TK</td><td>:</td><td><?= $pendaftaran->tahun_nomor_ijazah ?></td></tr>
+        </table>
+
+        <div class="section-title">D. DIISI OLEH PETUGAS</div>
+        <table class="tabel-petugas">
+            <tr>
+                <td>Nama Petugas Penerima</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Nomor Berkas</td>
+                <td></td>
+            </tr>
         </table>
 
         <div class="ttd-container">
