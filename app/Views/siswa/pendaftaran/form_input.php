@@ -35,7 +35,7 @@
 
     <div class="card glass-form mb-4">
         <div class="card-body p-4 p-md-5">
-            <form id="formPendaftaran" action="<?= base_url('siswa/pendaftaran/store') ?>" method="POST">
+            <form id="formPendaftaran" action="<?= base_url('siswa/pendaftaran/store') ?>" method="POST" enctype="multipart/form-data">
                 
                 <h5 class="form-section-title">A. IDENTITAS PESERTA DIDIK</h5>
                 <div class="row g-3 mb-5">
@@ -141,7 +141,21 @@
                     <div class="col-md-4"><label class="form-label">29c. Tahun dan Nomor Ijazah</label><input type="text" name="tahun_nomor_ijazah" class="form-control" required></div>
                 </div>
 
-                <div class="border p-4 rounded bg-light mb-4">
+                <h5 class="form-section-title">D. UNGGAH DOKUMEN PERSYARATAN</h5>
+                <div class="row g-3 mb-5">
+                    <?php if(!empty($persyaratan)): ?>
+                        <?php foreach($persyaratan as $p): ?>
+                        <div class="col-md-6 mb-2">
+                            <label class="form-label fw-bold"><i class='bx bx-upload me-1 text-primary'></i> <?= $p->nama_persyaratan ?></label>
+                            <input type="file" name="berkas[<?= $p->id ?>]" class="form-control" required accept=".jpg,.jpeg,.png,.pdf">
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="col-12"><div class="alert alert-info">Belum ada dokumen persyaratan yang wajib diunggah.</div></div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="border p-4 rounded bg-light mb-4 mt-3">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="cekKebenaran" style="width: 20px; height: 20px;">
                         <label class="form-check-label ms-2 fw-bold text-dark mt-1" for="cekKebenaran">
