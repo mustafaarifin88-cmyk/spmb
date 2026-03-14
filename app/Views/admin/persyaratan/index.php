@@ -26,7 +26,7 @@
 
     <div class="card glass-card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-bold text-primary">Daftar Persyaratan Pendaftaran</h5>
+            <h5 class="mb-0 fw-bold text-primary">Daftar Dokumen Upload Calon Siswa</h5>
             <button type="button" class="btn btn-primary rounded-pill shadow-sm fw-bold px-4" data-bs-toggle="modal" data-bs-target="#modalTambah">
                 <i class="bx bx-plus me-1"></i> Tambah Persyaratan
             </button>
@@ -37,6 +37,7 @@
                     <tr>
                         <th width="10%">No</th>
                         <th>Nama Dokumen Persyaratan</th>
+                        <th>Status</th>
                         <th width="20%">Aksi</th>
                     </tr>
                 </thead>
@@ -45,6 +46,13 @@
                         <tr>
                             <td><?= $no++ ?></td>
                             <td class="fw-medium text-dark"><i class='bx bx-file text-primary me-2'></i><?= $row->nama_persyaratan ?></td>
+                            <td>
+                                <?php if($row->is_wajib == 1): ?>
+                                    <span class="badge bg-label-danger px-3 py-2 rounded-pill fw-bold">Wajib</span>
+                                <?php else: ?>
+                                    <span class="badge bg-label-secondary px-3 py-2 rounded-pill fw-bold">Opsional</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-warning rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $row->id ?>">
                                     <i class="bx bx-edit-alt"></i>
