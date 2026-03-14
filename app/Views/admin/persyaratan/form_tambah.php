@@ -7,10 +7,17 @@
             </div>
             <form action="<?= base_url('admin/persyaratan/store') ?>" method="POST">
                 <div class="modal-body px-4 py-4">
-                    <div class="row">
-                        <div class="col mb-2">
+                    <div class="row g-3">
+                        <div class="col-12">
                             <label for="nama_persyaratan" class="form-label fw-bold">Nama Dokumen</label>
                             <input type="text" id="nama_persyaratan" name="nama_persyaratan" class="form-control form-control-lg" placeholder="Contoh: Fotocopy Ijazah Legalisir" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Status Persyaratan</label>
+                            <select name="is_wajib" class="form-select form-select-lg" required>
+                                <option value="1">Wajib Diunggah</option>
+                                <option value="0">Opsional (Tidak Wajib)</option>
+                            </select>
                         </div>
                     </div>
                 </div>
