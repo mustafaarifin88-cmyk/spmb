@@ -10,6 +10,7 @@ use App\Models\ProfilSekolahModel;
 use App\Models\LatarBelakangModel;
 use App\Models\PersyaratanModel;
 use App\Models\BerkasPendaftaranModel;
+use App\Models\PengaturanModel;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -21,6 +22,12 @@ class Pendaftaran extends BaseController
         $agamaModel = new AgamaModel();
         $pekerjaanModel = new PekerjaanModel();
         $persyaratanModel = new PersyaratanModel();
+        $pengaturanModel = new PengaturanModel();
+
+        $pengaturan = $pengaturanModel->first();
+        if ($pengaturan && $pengaturan->is_open == 0) {
+            return redirect()->to('/siswa/dashboard')->with('error', 'Masa pendaftaran sedang ditutup.');
+        }
 
         $id_user = session()->get('id');
         $cekDaftar = $pendaftaranModel->where('id_user', $id_user)->first();
@@ -51,47 +58,17 @@ class Pendaftaran extends BaseController
             file_put_contents('uploads/ttd/' . $ttdName, $ttd_base64);
         }
 
-        $dataInsert = [
-            'id_user' => session()->get('id'),
-            'no_kk' => $this->request->getPost('no_kk'),
-            'nik_siswa' => $this->request->getPost('nik_siswa'),
-            'nama_peserta_didik' => $this->request->getPost('nama_peserta_didik'),
-            'nama_panggilan' => $this->request->getPost('nama_panggilan'),
-            'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-            'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-            'id_agama' => $this->request->getPost('id_agama'),
-            'kewarganegaraan' => $this->request->getPost('kewarganegaraan'),
-            'anak_ke' => $this->request->getPost('anak_ke'),
-            'jumlah_saudara_kandung' => $this->request->getPost('jumlah_saudara_kandung'),
-            'jumlah_saudara_angkat' => $this->request->getPost('jumlah_saudara_angkat'),
-            'bahasa_sehari_hari' => $this->request->getPost('bahasa_sehari_hari'),
-            'berat_badan' => $this->request->getPost('berat_badan'),
-            'tinggi_badan' => $this->request->getPost('tinggi_badan'),
-            'alamat' => $this->request->getPost('alamat'),
-            'no_telp' => $this->request->getPost('no_telp'),
-            'tempat_tinggal' => $this->request->getPost('tempat_tinggal'),
-            'nama_ayah' => $this->request->getPost('nama_ayah'),
-            'nama_ibu' => $this->request->getPost('nama_ibu'),
-            'nik_ayah' => $this->request->getPost('nik_ayah'),
-            'nik_ibu' => $this->request->getPost('nik_ibu'),
-            'pendidikan_ayah' => $this->request->getPost('pendidikan_ayah'),
-            'pendidikan_ibu' => $this->request->getPost('pendidikan_ibu'),
-            'penghasilan_ayah' => $this->request->getPost('penghasilan_ayah'),
-            'penghasilan_ibu' => $this->request->getPost('penghasilan_ibu'),
-            'id_pekerjaan_ayah' => $this->request->getPost('id_pekerjaan_ayah'),
-            'id_pekerjaan_ibu' => $this->request->getPost('id_pekerjaan_ibu'),
-            'nama_wali' => $this->request->getPost('nama_wali'),
-            'pendidikan_wali' => $this->request->getPost('pendidikan_wali'),
-            'hubungan_wali' => $this->request->getPost('hubungan_wali'),
-            'id_pekerjaan_wali' => $this->request->getPost('id_pekerjaan_wali') ? $this->request->getPost('id_pekerjaan_wali') : null,
-            'masuk_sebagai' => 'Murid Baru',
-            'asal_peserta_didik' => $this->request->getPost('asal_peserta_didik'),
-            'nama_tk' => $this->request->getPost('nama_tk'),
-            'tahun_nomor_ijazah' => $this->request->getPost('tahun_nomor_ijazah'),
-            'ttd_ortu' => $ttdName,
-            'status_pendaftaran' => 'Menunggu'
-        ];
+        $dataInsert = $this->request->getPost();
+        unset($dataInsert['berkas']);
+        unset($dataInsert['ttd_ortu_base64']);
+        
+        $dataInsert['id_user'] = session()->get('id');
+        $dataInsert['masuk_sebagai'] = 'Murid Baru';
+        $dataInsert['ttd_ortu'] = $ttdName;
+        $dataInsert['status_pendaftaran'] = 'Menunggu';
+        if(empty($dataInsert['id_pekerjaan_wali'])) {
+            $dataInsert['id_pekerjaan_wali'] = null;
+        }
 
         $pendaftaranModel->insert($dataInsert);
         $idPendaftaran = $pendaftaranModel->getInsertID();
@@ -116,6 +93,46 @@ class Pendaftaran extends BaseController
         return redirect()->to('/siswa/dashboard')->with('success', 'Formulir pendaftaran berhasil dikirim!');
     }
 
+    public function update_berkas()
+    {
+        $berkasModel = new BerkasPendaftaranModel();
+        $pendaftaranModel = new PendaftaranModel();
+        $id_pendaftaran = $this->request->getPost('id_pendaftaran');
+
+        if ($this->request->getFiles()) {
+            $files = $this->request->getFiles();
+            if (isset($files['berkas'])) {
+                foreach ($files['berkas'] as $idPersyaratan => $file) {
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        $newName = $file->getRandomName();
+                        $file->move('uploads/siswa/', $newName);
+                        
+                        $exist = $berkasModel->where('id_pendaftaran', $id_pendaftaran)->where('id_persyaratan', $idPersyaratan)->first();
+                        if ($exist) {
+                            if (file_exists('uploads/siswa/' . $exist->file_path)) {
+                                unlink('uploads/siswa/' . $exist->file_path);
+                            }
+                            $berkasModel->update($exist->id, ['file_path' => $newName]);
+                        } else {
+                            $berkasModel->insert([
+                                'id_pendaftaran' => $id_pendaftaran,
+                                'id_persyaratan' => $idPersyaratan,
+                                'file_path'      => $newName
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
+        $pendaftaranModel->update($id_pendaftaran, [
+            'status_pendaftaran' => 'Menunggu',
+            'pesan_perbaikan' => null
+        ]);
+
+        return redirect()->to('/siswa/dashboard')->with('success', 'Berkas berhasil diperbaiki dan sedang menunggu konfirmasi ulang.');
+    }
+
     public function cetak_pdf()
     {
         $pendaftaranModel = new PendaftaranModel();
@@ -123,7 +140,13 @@ class Pendaftaran extends BaseController
         $latarModel = new LatarBelakangModel();
 
         $id_user = session()->get('id');
-        $pendaftaran = $pendaftaranModel->where('id_user', $id_user)->first();
+        $pendaftaran = $pendaftaranModel
+            ->select('pendaftaran.*, p_ayah.nama_pekerjaan as pk_ayah, p_ibu.nama_pekerjaan as pk_ibu, p_wali.nama_pekerjaan as pk_wali')
+            ->join('pekerjaan as p_ayah', 'p_ayah.id = pendaftaran.id_pekerjaan_ayah', 'left')
+            ->join('pekerjaan as p_ibu', 'p_ibu.id = pendaftaran.id_pekerjaan_ibu', 'left')
+            ->join('pekerjaan as p_wali', 'p_wali.id = pendaftaran.id_pekerjaan_wali', 'left')
+            ->where('id_user', $id_user)
+            ->first();
 
         if (!$pendaftaran) {
             return redirect()->to('/siswa/dashboard');
@@ -143,5 +166,7 @@ class Pendaftaran extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream("Formulir_Pendaftaran_Saya.pdf", array("Attachment" => false));
+        
+        exit();
     }
 }
