@@ -8,6 +8,6 @@ class PersyaratanModel extends Model
 {
     protected $table            = 'persyaratan';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['nama_persyaratan'];
+    protected $allowedFields    = ['nama_persyaratan', 'is_wajib'];
     protected $returnType       = 'object';
 }
