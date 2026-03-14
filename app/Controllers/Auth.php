@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\PengaturanModel;
 
 class Auth extends BaseController
 {
@@ -52,11 +53,22 @@ class Auth extends BaseController
         if (session()->get('logged_in')) {
             return redirect()->to(session()->get('level') == 'admin' ? '/admin/dashboard' : '/siswa/dashboard');
         }
-        return view('auth/register');
+
+        $pengaturanModel = new PengaturanModel();
+        $data['pengaturan'] = $pengaturanModel->first();
+
+        return view('auth/register', $data);
     }
 
     public function store_register()
     {
+        $pengaturanModel = new PengaturanModel();
+        $pengaturan = $pengaturanModel->first();
+
+        if ($pengaturan && $pengaturan->is_open == 0) {
+            return redirect()->to('/auth/register')->with('error', 'Maaf, pendaftaran akun saat ini sedang ditutup.');
+        }
+
         $userModel = new UserModel();
         
         $username = $this->request->getPost('username');
