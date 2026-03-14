@@ -23,7 +23,8 @@ class Persyaratan extends BaseController
     public function store()
     {
         $this->persyaratanModel->insert([
-            'nama_persyaratan' => $this->request->getPost('nama_persyaratan')
+            'nama_persyaratan' => $this->request->getPost('nama_persyaratan'),
+            'is_wajib' => $this->request->getPost('is_wajib')
         ]);
         return redirect()->to('/admin/persyaratan')->with('success', 'Persyaratan berhasil ditambahkan');
     }
@@ -31,7 +32,8 @@ class Persyaratan extends BaseController
     public function update($id)
     {
         $this->persyaratanModel->update($id, [
-            'nama_persyaratan' => $this->request->getPost('nama_persyaratan')
+            'nama_persyaratan' => $this->request->getPost('nama_persyaratan'),
+            'is_wajib' => $this->request->getPost('is_wajib')
         ]);
         return redirect()->to('/admin/persyaratan')->with('success', 'Persyaratan berhasil diubah');
     }
