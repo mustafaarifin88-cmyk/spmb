@@ -146,12 +146,19 @@
                     <?php if(!empty($persyaratan)): ?>
                         <?php foreach($persyaratan as $p): ?>
                         <div class="col-md-6 mb-2">
-                            <label class="form-label fw-bold"><i class='bx bx-upload me-1 text-primary'></i> <?= $p->nama_persyaratan ?></label>
-                            <input type="file" name="berkas[<?= $p->id ?>]" class="form-control" required accept=".jpg,.jpeg,.png,.pdf">
+                            <label class="form-label fw-bold">
+                                <i class='bx bx-upload me-1 text-primary'></i> <?= $p->nama_persyaratan ?>
+                                <?php if($p->is_wajib == 1): ?>
+                                    <span class="badge bg-danger ms-1" style="font-size: 0.6rem;">Wajib</span>
+                                <?php else: ?>
+                                    <span class="badge bg-secondary ms-1" style="font-size: 0.6rem;">Opsional</span>
+                                <?php endif; ?>
+                            </label>
+                            <input type="file" name="berkas[<?= $p->id ?>]" class="form-control" accept=".jpg,.jpeg,.png,.pdf" <?= $p->is_wajib == 1 ? 'required' : '' ?>>
                         </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <div class="col-12"><div class="alert alert-info">Belum ada dokumen persyaratan yang wajib diunggah.</div></div>
+                        <div class="col-12"><div class="alert alert-info">Belum ada pengaturan dokumen persyaratan.</div></div>
                     <?php endif; ?>
                 </div>
 
