@@ -26,66 +26,79 @@
 
     <div class="card glass-card">
         <div class="card-header border-bottom mb-4 pb-3">
-            <h5 class="mb-0 fw-bold text-primary">Informasi Data Sekolah & Kepala Sekolah</h5>
+            <h5 class="mb-0 fw-bold text-primary">Informasi Data Sekolah & Kop Surat</h5>
         </div>
         <div class="card-body">
             <form action="<?= base_url('admin/profilsekolah/update') ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= $sekolah ? $sekolah->id : '' ?>">
                 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Nama Sekolah</label>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nama Dinas Pendidikan (Baris 1 Kop)</label>
+                        <input type="text" name="nama_dinas" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nama_dinas : '' ?>" placeholder="Contoh: DINAS PENDIDIKAN PROVINSI JAWA BARAT" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Kabupaten/Kota (Baris 2 Kop)</label>
+                        <input type="text" name="kabupaten" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->kabupaten : '' ?>" placeholder="Contoh: CABANG DINAS PENDIDIKAN WILAYAH VII" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nama Sekolah Dasar / Instansi</label>
                         <input type="text" name="nama_sekolah" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nama_sekolah : '' ?>" required>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Desa / Kelurahan</label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Desa / Kelurahan / Kecamatan</label>
                         <input type="text" name="desa" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->desa : '' ?>" required>
                     </div>
-                    <div class="col-12 mb-4">
-                        <label class="form-label fw-bold">Alamat Lengkap (Kop Surat)</label>
-                        <textarea name="alamat_lengkap" class="form-control" rows="3" required><?= $sekolah ? $sekolah->alamat_lengkap : '' ?></textarea>
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Alamat Lengkap & Kontak (Baris Bawah Kop)</label>
+                        <textarea name="alamat_lengkap" class="form-control" rows="2" placeholder="Contoh: Jl. Merdeka No. 1, Telp: 021-123456, Email: info@sekolah.sch.id" required><?= $sekolah ? $sekolah->alamat_lengkap : '' ?></textarea>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Nama Kepala Sekolah</label>
-                        <input type="text" name="nama_kepsek" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nama_kepsek : '' ?>" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">NIP Kepala Sekolah</label>
-                        <input type="text" name="nip_kepsek" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nip_kepsek : '' ?>" required>
-                    </div>
-
-                    <div class="col-md-6 mt-3">
-                        <label class="form-label fw-bold">Logo Pemda (Kiri Kop Surat - PNG)</label>
-                        <div class="d-flex align-items-center gap-3 mt-2 p-2 border rounded bg-light">
-                            <?php if ($sekolah && $sekolah->logo_pemda) : ?>
-                                <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda" id="previewPemda" style="height: 80px; width: 80px; object-fit: contain;">
-                            <?php else : ?>
-                                <div id="previewPemda" class="d-flex align-items-center justify-content-center text-muted text-center" style="height: 80px; width: 80px; border: 2px dashed #ccc; font-size: 10px;">Belum Ada Logo</div>
-                            <?php endif; ?>
-                            <div class="flex-grow-1">
-                                <input type="file" name="logo_pemda" id="logo_pemda" class="form-control form-control-sm" accept="image/png">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mt-3">
-                        <label class="form-label fw-bold">Logo Sekolah (Kanan Kop Surat - PNG)</label>
-                        <div class="d-flex align-items-center gap-3 mt-2 p-2 border rounded bg-light">
+                    <div class="col-md-6 mt-4">
+                        <label class="form-label fw-bold text-info"><i class='bx bx-image me-1'></i> Logo Sekolah (Kiri Kop - PNG)</label>
+                        <div class="d-flex align-items-center gap-3 p-3 border rounded bg-light shadow-sm">
                             <?php if ($sekolah && $sekolah->logo_sekolah) : ?>
                                 <img src="<?= base_url('uploads/logo/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah" id="previewSekolah" style="height: 80px; width: 80px; object-fit: contain;">
                             <?php else : ?>
                                 <div id="previewSekolah" class="d-flex align-items-center justify-content-center text-muted text-center" style="height: 80px; width: 80px; border: 2px dashed #ccc; font-size: 10px;">Belum Ada Logo</div>
                             <?php endif; ?>
                             <div class="flex-grow-1">
-                                <input type="file" name="logo_sekolah" id="logo_sekolah" class="form-control form-control-sm" accept="image/png">
+                                <input type="file" name="logo_sekolah" id="logo_sekolah" class="form-control" accept="image/png">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12 mt-4">
-                        <label class="form-label fw-bold">Tanda Tangan Kepala Sekolah (PNG Transparan)</label>
-                        <div class="d-flex align-items-center gap-4 mt-2 p-3 border rounded bg-light">
+                    <div class="col-md-6 mt-4">
+                        <label class="form-label fw-bold text-info"><i class='bx bx-image me-1'></i> Logo Pemda (Kanan Kop - PNG)</label>
+                        <div class="d-flex align-items-center gap-3 p-3 border rounded bg-light shadow-sm">
+                            <?php if ($sekolah && $sekolah->logo_pemda) : ?>
+                                <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda" id="previewPemda" style="height: 80px; width: 80px; object-fit: contain;">
+                            <?php else : ?>
+                                <div id="previewPemda" class="d-flex align-items-center justify-content-center text-muted text-center" style="height: 80px; width: 80px; border: 2px dashed #ccc; font-size: 10px;">Belum Ada Logo</div>
+                            <?php endif; ?>
+                            <div class="flex-grow-1">
+                                <input type="file" name="logo_pemda" id="logo_pemda" class="form-control" accept="image/png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 border-top pt-4">
+                        <h6 class="fw-bold text-primary mb-3">Informasi Kepala Sekolah</h6>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nama Kepala Sekolah</label>
+                        <input type="text" name="nama_kepsek" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nama_kepsek : '' ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">NIP Kepala Sekolah</label>
+                        <input type="text" name="nip_kepsek" class="form-control form-control-lg" value="<?= $sekolah ? $sekolah->nip_kepsek : '' ?>" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-bold text-info"><i class='bx bx-pen me-1'></i> Tanda Tangan Kepala Sekolah (PNG Transparan)</label>
+                        <div class="d-flex align-items-center gap-4 p-3 border rounded bg-light shadow-sm">
                             <?php if ($sekolah && $sekolah->ttd_kepsek) : ?>
                                 <img src="<?= base_url('uploads/ttd/' . $sekolah->ttd_kepsek) ?>" alt="TTD Kepsek" id="previewTTD" style="max-height: 100px; max-width: 200px; object-fit: contain;">
                             <?php else : ?>
@@ -99,7 +112,7 @@
                 </div>
 
                 <div class="mt-5 text-end">
-                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow px-5 fw-bold">Simpan Pengaturan</button>
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow px-5 fw-bold"><i class="bx bx-save me-2"></i>Simpan Perubahan</button>
                 </div>
             </form>
         </div>
