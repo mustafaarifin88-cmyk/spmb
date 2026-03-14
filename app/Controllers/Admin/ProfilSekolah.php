@@ -22,7 +22,6 @@ class ProfilSekolah extends BaseController
 
         $fileTtd = $this->request->getFile('ttd_kepsek');
         $namaTtd = $sekolah ? $sekolah->ttd_kepsek : null;
-
         if ($fileTtd && $fileTtd->isValid() && !$fileTtd->hasMoved()) {
             $namaTtd = $fileTtd->getRandomName();
             $fileTtd->move('uploads/ttd/', $namaTtd);
@@ -33,7 +32,6 @@ class ProfilSekolah extends BaseController
 
         $filePemda = $this->request->getFile('logo_pemda');
         $namaPemda = $sekolah ? $sekolah->logo_pemda : null;
-
         if ($filePemda && $filePemda->isValid() && !$filePemda->hasMoved()) {
             $namaPemda = $filePemda->getRandomName();
             $filePemda->move('uploads/logo/', $namaPemda);
@@ -44,7 +42,6 @@ class ProfilSekolah extends BaseController
 
         $fileSekolah = $this->request->getFile('logo_sekolah');
         $namaSekolah = $sekolah ? $sekolah->logo_sekolah : null;
-
         if ($fileSekolah && $fileSekolah->isValid() && !$fileSekolah->hasMoved()) {
             $namaSekolah = $fileSekolah->getRandomName();
             $fileSekolah->move('uploads/logo/', $namaSekolah);
@@ -54,6 +51,8 @@ class ProfilSekolah extends BaseController
         }
 
         $updateData = [
+            'nama_dinas' => $this->request->getPost('nama_dinas'),
+            'kabupaten' => $this->request->getPost('kabupaten'),
             'nama_sekolah' => $this->request->getPost('nama_sekolah'),
             'alamat_lengkap' => $this->request->getPost('alamat_lengkap'),
             'desa' => $this->request->getPost('desa'),
