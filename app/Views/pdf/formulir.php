@@ -39,7 +39,7 @@
             display: table-cell;
             width: 15%;
             vertical-align: middle;
-            text-align: center;
+            text-align: left;
         }
         .logo-kiri img {
             max-width: 80px;
@@ -49,7 +49,7 @@
             display: table-cell;
             width: 15%;
             vertical-align: middle;
-            text-align: center;
+            text-align: right;
         }
         .logo-kanan img {
             max-width: 80px;
@@ -61,9 +61,20 @@
             vertical-align: middle;
             text-align: center;
         }
+        .teks-kop h4 {
+            margin: 0 0 3px 0;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .teks-kop h3 {
+            margin: 0 0 3px 0;
+            font-size: 16px;
+            font-weight: normal;
+        }
         .teks-kop h2 {
             margin: 0 0 5px 0;
-            font-size: 20px;
+            font-size: 22px;
+            font-weight: bold;
             text-transform: uppercase;
         }
         .teks-kop p {
@@ -140,17 +151,19 @@
     <div class="content">
         <div class="kop-surat">
             <div class="logo-kiri">
-                <?php if ($sekolah && $sekolah->logo_pemda && file_exists('uploads/logo/' . $sekolah->logo_pemda)) : ?>
-                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda">
+                <?php if ($sekolah && $sekolah->logo_sekolah && file_exists('uploads/logo/' . $sekolah->logo_sekolah)) : ?>
+                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah">
                 <?php endif; ?>
             </div>
             <div class="teks-kop">
+                <h4><?= $sekolah ? strtoupper($sekolah->nama_dinas) : 'DINAS PENDIDIKAN' ?></h4>
+                <h3><?= $sekolah ? strtoupper($sekolah->kabupaten) : 'KABUPATEN / KOTA' ?></h3>
                 <h2><?= $sekolah ? strtoupper($sekolah->nama_sekolah) : 'NAMA SEKOLAH' ?></h2>
                 <p><?= $sekolah ? $sekolah->alamat_lengkap : 'Alamat Lengkap Sekolah' ?></p>
             </div>
             <div class="logo-kanan">
-                <?php if ($sekolah && $sekolah->logo_sekolah && file_exists('uploads/logo/' . $sekolah->logo_sekolah)) : ?>
-                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah">
+                <?php if ($sekolah && $sekolah->logo_pemda && file_exists('uploads/logo/' . $sekolah->logo_pemda)) : ?>
+                    <img src="<?= base_url('uploads/logo/' . $sekolah->logo_pemda) ?>" alt="Logo Pemda">
                 <?php endif; ?>
             </div>
         </div>
@@ -188,19 +201,22 @@
             <tr><td>23.</td><td>Pendidikan Terakhir Ibu</td><td>:</td><td><?= $pendaftaran->pendidikan_ibu ?></td></tr>
             <tr><td>24.</td><td>Penghasilan Ayah</td><td>:</td><td><?= $pendaftaran->penghasilan_ayah ?></td></tr>
             <tr><td>25.</td><td>Penghasilan Ibu</td><td>:</td><td><?= $pendaftaran->penghasilan_ibu ?></td></tr>
+            <tr><td>26.</td><td>Pekerjaan Ayah</td><td>:</td><td><?= $pendaftaran->pk_ayah ?></td></tr>
+            <tr><td>27.</td><td>Pekerjaan Ibu</td><td>:</td><td><?= $pendaftaran->pk_ibu ?></td></tr>
             <?php if ($pendaftaran->nama_wali) : ?>
-                <tr><td>26.</td><td>Nama Wali</td><td>:</td><td><?= $pendaftaran->nama_wali ?></td></tr>
-                <tr><td>27.</td><td>Pendidikan Terakhir Wali</td><td>:</td><td><?= $pendaftaran->pendidikan_wali ?></td></tr>
-                <tr><td>28.</td><td>Hubungan dengan Siswa</td><td>:</td><td><?= $pendaftaran->hubungan_wali ?></td></tr>
+                <tr><td>28.</td><td>Nama Wali</td><td>:</td><td><?= $pendaftaran->nama_wali ?></td></tr>
+                <tr><td>29.</td><td>Pendidikan Terakhir Wali</td><td>:</td><td><?= $pendaftaran->pendidikan_wali ?></td></tr>
+                <tr><td>30.</td><td>Hubungan dengan Siswa</td><td>:</td><td><?= $pendaftaran->hubungan_wali ?></td></tr>
+                <tr><td>31.</td><td>Pekerjaan Wali</td><td>:</td><td><?= $pendaftaran->pk_wali ?></td></tr>
             <?php endif; ?>
         </table>
 
         <div class="section-title">C. ASAL MULA PESERTA DIDIK</div>
         <table class="tabel-data">
-            <tr><td>29.</td><td>Masuk Sekolah Ini Sebagai</td><td>:</td><td><?= $pendaftaran->masuk_sebagai ?></td></tr>
-            <tr><td>30.</td><td>Asal Peserta Didik</td><td>:</td><td><?= $pendaftaran->asal_peserta_didik ?></td></tr>
-            <tr><td>31.</td><td>Nama Taman Kanak-Kanak</td><td>:</td><td><?= $pendaftaran->nama_tk ?></td></tr>
-            <tr><td>32.</td><td>Tahun & Nomor Ijazah TK</td><td>:</td><td><?= $pendaftaran->tahun_nomor_ijazah ?></td></tr>
+            <tr><td>32.</td><td>Masuk Sekolah Ini Sebagai</td><td>:</td><td><?= $pendaftaran->masuk_sebagai ?></td></tr>
+            <tr><td>33.</td><td>Asal Peserta Didik</td><td>:</td><td><?= $pendaftaran->asal_peserta_didik ?></td></tr>
+            <tr><td>34.</td><td>Nama Taman Kanak-Kanak</td><td>:</td><td><?= $pendaftaran->nama_tk ?></td></tr>
+            <tr><td>35.</td><td>Tahun & Nomor Ijazah TK</td><td>:</td><td><?= $pendaftaran->tahun_nomor_ijazah ?></td></tr>
         </table>
 
         <div class="section-title">D. DIISI OLEH PETUGAS</div>
