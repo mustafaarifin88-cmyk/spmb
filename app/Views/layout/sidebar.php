@@ -1,64 +1,47 @@
 <style>
-    /* Styling khusus untuk Sidebar Dark Glassmorphism */
     .layout-menu {
-        background: rgba(15, 23, 42, 0.85) !important; /* Warna gelap Slate/Navy */
+        background: rgba(15, 23, 42, 0.85) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15) !important;
     }
-    
-    /* Warna Teks Default Menu */
     .layout-menu .menu-link {
-        color: #cbd5e1 !important; /* Abu-abu terang agar mudah dibaca */
+        color: #cbd5e1 !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border-radius: 0.5rem;
         margin: 0.2rem 0.8rem;
     }
-    
-    /* Warna Ikon Default */
     .layout-menu .menu-icon {
         color: #94a3b8 !important;
         transition: all 0.3s ease;
     }
-
-    /* Efek Hover (Saat Disorot) */
     .layout-menu .menu-item:not(.active) > .menu-link:hover {
         background: rgba(255, 255, 255, 0.08) !important;
         color: #ffffff !important;
-        transform: translateX(6px); /* Efek bergeser sedikit ke kanan */
+        transform: translateX(6px);
     }
-    
     .layout-menu .menu-item:not(.active) > .menu-link:hover .menu-icon {
         color: #ffffff !important;
-        transform: scale(1.1); /* Ikon sedikit membesar */
+        transform: scale(1.1);
     }
-
-    /* Efek Menu Aktif */
     .layout-menu .menu-item.active > .menu-link {
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important; /* Gradiasi ungu-biru keren */
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
         color: #ffffff !important;
         box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
         border-radius: 0.5rem;
     }
-    
     .layout-menu .menu-item.active > .menu-link .menu-icon {
         color: #ffffff !important;
     }
-
-    /* Teks Header Menu (Master Data, dll) */
     .layout-menu .menu-header-text {
         color: #64748b !important;
         letter-spacing: 1px;
     }
-
-    /* Brand Logo & Teks */
     .layout-menu .app-brand-text {
         color: #ffffff !important;
         text-shadow: 0 2px 10px rgba(255,255,255,0.2);
     }
-    
-    /* Profil Sidebar */
     .sidebar-profile-box {
         background: rgba(0, 0, 0, 0.2);
         margin: 0 1rem;
@@ -109,15 +92,24 @@
                 <a href="<?= base_url('admin/pekerjaan') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div data-i18n="Pekerjaan">Pekerjaan</div></a>
             </li>
             <li class="menu-item <?= uri_string() == 'admin/persyaratan' ? 'active' : '' ?>">
-                <a href="<?= base_url('admin/persyaratan') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-file"></i><div data-i18n="Persyaratan">Persyaratan</div></a>
+                <a href="<?= base_url('admin/persyaratan') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-file"></i><div data-i18n="Persyaratan">Upload Online</div></a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admin/berkasfisik' ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/berkasfisik') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-folder-open"></i><div data-i18n="Berkas Fisik">Berkas Fisik</div></a>
             </li>
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Pendaftaran</span></li>
             <li class="menu-item <?= strpos(uri_string(), 'admin/konfirmasi') !== false ? 'active' : '' ?>">
-                <a href="<?= base_url('admin/konfirmasi') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-check-shield"></i><div data-i18n="Konfirmasi">Konfirmasi Pendaftaran</div></a>
+                <a href="<?= base_url('admin/konfirmasi') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-check-shield"></i><div data-i18n="Konfirmasi">Konfirmasi & Edit</div></a>
             </li>
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
+            <li class="menu-item <?= uri_string() == 'admin/pengaturan' ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/pengaturan') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-calendar-event"></i><div data-i18n="Jadwal SPMB">Jadwal SPMB</div></a>
+            </li>
             <li class="menu-item <?= uri_string() == 'admin/profilsekolah' ? 'active' : '' ?>">
                 <a href="<?= base_url('admin/profilsekolah') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-building-house"></i><div data-i18n="Profil Sekolah">Profil Sekolah</div></a>
+            </li>
+            <li class="menu-item <?= uri_string() == 'admin/slideshow' ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/slideshow') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-carousel"></i><div data-i18n="Slideshow">Slideshow</div></a>
             </li>
             <li class="menu-item <?= uri_string() == 'admin/latarbelakang' ? 'active' : '' ?>">
                 <a href="<?= base_url('admin/latarbelakang') ?>" class="menu-link"><i class="menu-icon tf-icons bx bx-image"></i><div data-i18n="Latar PDF">Latar PDF</div></a>
