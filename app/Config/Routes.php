@@ -50,7 +50,24 @@ $routes->group('admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->get('konfirmasi/detail/(:num)', 'Admin\Konfirmasi::detail/$1');
     $routes->get('konfirmasi/approve/(:num)', 'Admin\Konfirmasi::approve/$1');
     $routes->post('konfirmasi/reject/(:num)', 'Admin\Konfirmasi::reject/$1');
+    $routes->post('konfirmasi/perbaikan/(:num)', 'Admin\Konfirmasi::perbaikan/$1');
+    $routes->get('konfirmasi/edit_siswa/(:num)', 'Admin\Konfirmasi::edit_siswa/$1');
+    $routes->post('konfirmasi/update_siswa/(:num)', 'Admin\Konfirmasi::update_siswa/$1');
+    $routes->get('konfirmasi/delete_siswa/(:num)', 'Admin\Konfirmasi::delete_siswa/$1');
     $routes->get('konfirmasi/cetak_pdf/(:num)', 'Admin\Konfirmasi::cetak_pdf/$1');
+
+    $routes->get('pengaturan', 'Admin\Pengaturan::index');
+    $routes->post('pengaturan/update', 'Admin\Pengaturan::update');
+
+    $routes->get('slideshow', 'Admin\Slideshow::index');
+    $routes->post('slideshow/store', 'Admin\Slideshow::store');
+    $routes->post('slideshow/update/(:num)', 'Admin\Slideshow::update/$1');
+    $routes->get('slideshow/delete/(:num)', 'Admin\Slideshow::delete/$1');
+
+    $routes->get('berkasfisik', 'Admin\BerkasFisik::index');
+    $routes->post('berkasfisik/store', 'Admin\BerkasFisik::store');
+    $routes->post('berkasfisik/update/(:num)', 'Admin\BerkasFisik::update/$1');
+    $routes->get('berkasfisik/delete/(:num)', 'Admin\BerkasFisik::delete/$1');
 });
 
 $routes->group('siswa', ['filter' => 'role:siswa'], function ($routes) {
@@ -61,5 +78,6 @@ $routes->group('siswa', ['filter' => 'role:siswa'], function ($routes) {
 
     $routes->get('pendaftaran', 'Siswa\Pendaftaran::index');
     $routes->post('pendaftaran/store', 'Siswa\Pendaftaran::store');
+    $routes->post('pendaftaran/update_berkas', 'Siswa\Pendaftaran::update_berkas');
     $routes->get('pendaftaran/cetak_pdf', 'Siswa\Pendaftaran::cetak_pdf');
 });
